@@ -1,0 +1,11 @@
+# Programas descargados por npm (se reinstalan con "npm install")
+node_modules/
+
+# Versión final generada con "npm run build"
+dist/
+
+# Datos reales de estudiantes: NUNCA se suben a GitHub
+privado/
+*.xlsx
+*.xls
+*.csv
