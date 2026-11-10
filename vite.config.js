@@ -18,8 +18,8 @@ export default defineConfig(({ mode, command }) => ({
       registerType: 'autoUpdate', // cuando publicamos una mejora, la app se actualiza sola
       includeAssets: ['favicon.png', 'apple-touch-icon.png'],
       manifest: {
-        name: 'Profe Mago Rewards',
-        short_name: 'Profe Mago',
+        name: 'ProfeMago Rewards',
+        short_name: 'ProfeMago Rewards',
         description: 'Puntos para tus estudiantes con tarjetas QR, canjeables por premios.',
         lang: 'es',
         theme_color: '#4B3BC4',
