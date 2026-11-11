@@ -1,4 +1,4 @@
-// Todo lo que la app "recuerda": cursos, estudiantes y movimientos de puntos.
+// Todo lo que la app "recuerda": cursos, estudiantes, recompensas y movimientos de puntos.
 // En esta etapa se guarda solo en este navegador (localStorage).
 // Más adelante lo cambiaremos por una base de datos en la nube.
 
@@ -6,11 +6,18 @@ import { useEffect, useState } from 'react'
 
 const CLAVE = 'pmr-datos-v1'
 
-const DATOS_VACIOS = { cursos: [], estudiantes: [], movimientos: [] }
+// Las recompensas con que parte la app. El profe puede agregar más o quitarlas.
+const PREMIOS_INICIALES = [
+  { id: 'decima', nombre: 'Una décima para subir nota', costo: 5 },
+  { id: 'jeans-day', nombre: 'Jeans day (ir con ropa de calle)', costo: 50 },
+]
+
+const DATOS_VACIOS = { cursos: [], estudiantes: [], movimientos: [], premios: PREMIOS_INICIALES }
 
 function cargar() {
   try {
     const texto = localStorage.getItem(CLAVE)
+    // Si los datos guardados son de antes de las recompensas, se agregan las iniciales.
     return texto ? { ...DATOS_VACIOS, ...JSON.parse(texto) } : DATOS_VACIOS
   } catch {
     return DATOS_VACIOS
@@ -68,7 +75,12 @@ export async function leerCopia(archivo) {
   try {
     const d = JSON.parse(await archivo.text())
     if (d.app !== 'profe-mago-rewards' || !Array.isArray(d.cursos) || !Array.isArray(d.estudiantes)) return null
-    return { cursos: d.cursos, estudiantes: d.estudiantes, movimientos: d.movimientos ?? [] }
+    return {
+      cursos: d.cursos,
+      estudiantes: d.estudiantes,
+      movimientos: d.movimientos ?? [],
+      premios: Array.isArray(d.premios) ? d.premios : PREMIOS_INICIALES,
+    }
   } catch {
     return null
   }
@@ -106,6 +118,47 @@ export function aplicarPuntos(datos, estudianteId, cantidad) {
     ...datos,
     estudiantes: datos.estudiantes.map((e) => (e.id === estudianteId ? { ...e, puntos: nuevoTotal } : e)),
     movimientos: [...datos.movimientos, movimiento],
+  }
+}
+
+// ---- Recompensas ----
+
+export function crearPremio(datos, nombre, costo) {
+  const premio = { id: nuevoId(), nombre: nombre.trim(), costo }
+  return { ...datos, premios: [...datos.premios, premio] }
+}
+
+export function borrarPremio(datos, premioId) {
+  return { ...datos, premios: datos.premios.filter((p) => p.id !== premioId) }
+}
+
+// Descuenta el costo de la recompensa al estudiante, solo si le alcanzan los puntos.
+// Devuelve { datos, movimiento } si se canjeó, o null si no le alcanza.
+export function canjearPremio(datos, estudianteId, premioId) {
+  const estudiante = datos.estudiantes.find((e) => e.id === estudianteId)
+  const premio = datos.premios.find((p) => p.id === premioId)
+  if (!estudiante || !premio || estudiante.puntos < premio.costo) return null
+  const movimiento = {
+    id: nuevoId(), estudianteId, cantidad: -premio.costo, premioId, fecha: new Date().toISOString(),
+  }
+  return {
+    movimiento,
+    datos: {
+      ...datos,
+      estudiantes: datos.estudiantes.map((e) => (e.id === estudianteId ? { ...e, puntos: e.puntos - premio.costo } : e)),
+      movimientos: [...datos.movimientos, movimiento],
+    },
+  }
+}
+
+// Anula un movimiento (por ejemplo, un canje hecho por error) y devuelve los puntos.
+export function deshacerMovimiento(datos, movimientoId) {
+  const m = datos.movimientos.find((x) => x.id === movimientoId)
+  if (!m) return datos
+  return {
+    ...datos,
+    estudiantes: datos.estudiantes.map((e) => (e.id === m.estudianteId ? { ...e, puntos: Math.max(0, e.puntos - m.cantidad) } : e)),
+    movimientos: datos.movimientos.filter((x) => x.id !== movimientoId),
   }
 }
 

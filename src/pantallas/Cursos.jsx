@@ -1,7 +1,7 @@
 // Pantalla de inicio: la lista de cursos y un formulario para crear uno nuevo.
 import { useState } from 'react'
 import { crearCurso, descargarCopia, leerCopia } from '../datos.js'
-import { IconoEscanear, IconoEstrella, IconoFlecha, IconoMas } from '../iconos.jsx'
+import { IconoEscanear, IconoEstrella, IconoFlecha, IconoMas, IconoRegalo } from '../iconos.jsx'
 
 export default function Cursos({ datos, setDatos, ir }) {
   const [creando, setCreando] = useState(false)
@@ -30,6 +30,10 @@ export default function Cursos({ datos, setDatos, ir }) {
           <IconoEscanear /> Escanear tarjeta
         </button>
       )}
+
+      <button className="boton boton-dorado" onClick={() => ir({ nombre: 'premios' })}>
+        <IconoRegalo /> Canjear recompensas
+      </button>
 
       <h2 className="seccion">Mis cursos</h2>
 

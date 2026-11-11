@@ -14,7 +14,7 @@ function normalizar(texto) {
   return String(texto ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim()
 }
 
-// "DE LA FUENTE" -> "De La Fuente", "ANA-LUISA" -> "Ana-Luisa"
+// "DE LA FUENTE" -> "De La Fuente", "EVA-LUNA" -> "Eva-Luna"
 function bonito(texto) {
   return String(texto ?? '')
     .trim()
@@ -51,7 +51,7 @@ export function nombresDesdeFilas(filas) {
         if (completo) resultado.push(completo)
         continue
       }
-      // Primer nombre + primer apellido, por ejemplo "ANA MARÍA" + "SOTO" -> "Ana Soto"
+      // Primer nombre + primer apellido, por ejemplo "ZOE ISABEL" + "QUIROZ" -> "Zoe Quiroz"
       const primerNombre = bonito(String(fila[columnas.nombres] ?? '').trim().split(/\s+/)[0])
       const apellido = columnas.apellido === -1 ? '' : bonito(fila[columnas.apellido])
       const nombre = [primerNombre, apellido].filter(Boolean).join(' ')

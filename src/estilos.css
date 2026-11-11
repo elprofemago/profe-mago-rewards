@@ -143,6 +143,23 @@ label.boton { cursor: pointer; }
 
 .espaciador { flex: 1; }
 
+/* ---- Recompensas ---- */
+.boton-dorado { background: var(--dorado); color: #3A2A00; }
+.boton-peligro { background: var(--restar); color: #FFFFFF; font-family: var(--texto); font-weight: 700; font-size: 15px; min-height: 40px; }
+.avatar-dorado { background: #FFF1C2; color: #8A6100; }
+.fila:disabled { opacity: 0.5; cursor: not-allowed; }
+.fila .boton { min-height: 40px; padding: 0 14px; }
+.premio-elegido {
+  display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 16px;
+  background: #2A2550; font-weight: 800; font-size: 16px;
+}
+.premio-elegido .nombre { flex: 1; }
+.premio-elegido .puntos { color: var(--dorado); }
+.ficha-canje { color: var(--tinta); --color-modo: var(--restar); gap: 12px; }
+.ficha-canje h2 { margin: 0; font-family: var(--titulos); font-weight: 600; font-size: 26px; }
+.ficha-canje .aviso-exito, .ficha-canje .aviso-error, .ficha-canje .aviso-info { width: 100%; justify-content: center; }
+[hidden] { display: none !important; }
+
 /* ---- Escáner ---- */
 .pantalla-oscura { background: #15122B; color: #FFFFFF; max-width: none; }
 .pantalla-oscura > * { width: 100%; max-width: 440px; margin-left: auto; margin-right: auto; }
