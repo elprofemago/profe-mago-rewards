@@ -18,7 +18,7 @@ function limpiarCodigo(texto) {
   return c.length === 6 ? c.slice(0, 3) + '-' + c.slice(3) : c
 }
 
-export default function Escanear({ datos, setDatos, ir, premioId }) {
+export default function Escanear({ datos, setDatos, ir, atras, premioId }) {
   const video = useRef(null)
   const [error, setError] = useState('')
   const [aviso, setAviso] = useState('')
@@ -27,7 +27,7 @@ export default function Escanear({ datos, setDatos, ir, premioId }) {
   const [resultado, setResultado] = useState(null)
 
   const premio = premioId ? datos.premios.find((p) => p.id === premioId) : null
-  const volver = () => ir(premioId ? { nombre: 'premios' } : { nombre: 'cursos' })
+  const volver = atras
 
   // La cámara corre en un ciclo aparte; estas referencias le dan siempre los datos al día.
   const datosAlDia = useRef(datos)

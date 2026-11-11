@@ -6,7 +6,7 @@ import { IconoCheck, IconoDerecha, IconoEstrella, IconoVolver } from '../iconos.
 const COLOR_SUMAR = '#4B3BC4'
 const COLOR_RESTAR = '#B4400B'
 
-export default function DarPuntos({ datos, setDatos, ir, estudianteId, desde }) {
+export default function DarPuntos({ datos, setDatos, atras, estudianteId, desde }) {
   const [modo, setModo] = useState('sumar')
   const [cantidad, setCantidad] = useState(1)
   const [listo, setListo] = useState(null) // mensaje de éxito después de confirmar
@@ -23,7 +23,7 @@ export default function DarPuntos({ datos, setDatos, ir, estudianteId, desde }) 
   const primerNombre = estudiante.nombre.split(' ')[0]
   // Si llegamos escaneando, "volver" regresa a la cámara para seguir con el siguiente.
   const deEscaner = desde === 'escaner'
-  const volver = () => ir(deEscaner ? { nombre: 'escanear' } : { nombre: 'curso', cursoId: estudiante.cursoId })
+  const volver = atras
 
   const elegirModo = (m) => { setModo(m); setListo(null) }
   const elegirCantidad = (n) => { setCantidad(n); setListo(null) }

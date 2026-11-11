@@ -6,7 +6,7 @@ import { IconoEstrella, IconoExcel, IconoImprimir, IconoMas, IconoVolver } from 
 
 const clave = (nombre) => nombre.toLocaleLowerCase('es').trim()
 
-export default function Curso({ datos, setDatos, ir, cursoId }) {
+export default function Curso({ datos, setDatos, ir, atras, cursoId }) {
   const curso = datos.cursos.find((c) => c.id === cursoId)
   const [agregando, setAgregando] = useState(false)
   const [lista, setLista] = useState('')
@@ -57,7 +57,7 @@ export default function Curso({ datos, setDatos, ir, cursoId }) {
   return (
     <div className="pantalla">
       <header className="encabezado">
-        <button className="volver" aria-label="Volver a mis cursos" onClick={() => ir({ nombre: 'cursos' })}>
+        <button className="volver" aria-label="Volver a mis cursos" onClick={atras}>
           <IconoVolver />
         </button>
         <div>

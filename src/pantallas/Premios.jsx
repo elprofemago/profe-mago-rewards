@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { borrarPremio, crearPremio } from '../datos.js'
 import { IconoEstrella, IconoFlecha, IconoMas, IconoRegalo, IconoVolver } from '../iconos.jsx'
 
-export default function Premios({ datos, setDatos, ir }) {
+export default function Premios({ datos, setDatos, ir, atras }) {
   const [editando, setEditando] = useState(false)
   const [creando, setCreando] = useState(false)
   const [nombre, setNombre] = useState('')
@@ -28,7 +28,7 @@ export default function Premios({ datos, setDatos, ir }) {
   return (
     <div className="pantalla">
       <header className="encabezado">
-        <button className="volver" aria-label="Volver a mis cursos" onClick={() => ir({ nombre: 'cursos' })}>
+        <button className="volver" aria-label="Volver a mis cursos" onClick={atras}>
           <IconoVolver />
         </button>
         <h1>Recompensas</h1>

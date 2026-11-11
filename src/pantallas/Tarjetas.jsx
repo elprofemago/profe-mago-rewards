@@ -2,9 +2,9 @@
 import { useEffect, useState } from 'react'
 import QRCode from 'qrcode'
 import { estudiantesDelCurso } from '../datos.js'
-import { IconoEstrella, IconoImprimir, IconoVolver } from '../iconos.jsx'
+import { IconoImprimir, IconoVolver } from '../iconos.jsx'
 
-export default function Tarjetas({ datos, ir, cursoId }) {
+export default function Tarjetas({ datos, atras, cursoId }) {
   const curso = datos.cursos.find((c) => c.id === cursoId)
   const estudiantes = curso ? estudiantesDelCurso(datos, cursoId) : []
   // Imagen QR de cada estudiante: { codigo: 'data:image/png...' }
@@ -26,7 +26,7 @@ export default function Tarjetas({ datos, ir, cursoId }) {
   return (
     <div className="pantalla" style={{ maxWidth: 820 }}>
       <header className="encabezado no-imprimir">
-        <button className="volver" aria-label="Volver al curso" onClick={() => ir({ nombre: 'curso', cursoId })}>
+        <button className="volver" aria-label="Volver al curso" onClick={atras}>
           <IconoVolver />
         </button>
         <div style={{ flex: 1 }}>
@@ -43,7 +43,7 @@ export default function Tarjetas({ datos, ir, cursoId }) {
         {estudiantes.map((e) => (
           <div key={e.id} className="tarjeta">
             <div className="izquierda">
-              <div className="marca"><IconoEstrella tamano={14} borde="#F4B400" /> Profe Mago Rewards</div>
+              <div className="marca"><img className="logo-tarjeta" src={`${import.meta.env.BASE_URL}icono-192.png`} alt="" /> ProfeMago Rewards</div>
               <div className="nombre-est">{e.nombre}</div>
               <div className="curso-est">{curso.nombre}</div>
               <div className="codigo">{e.codigo}</div>

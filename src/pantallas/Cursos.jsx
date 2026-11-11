@@ -1,7 +1,7 @@
 // Pantalla de inicio: la lista de cursos y un formulario para crear uno nuevo.
 import { useState } from 'react'
 import { crearCurso, descargarCopia, leerCopia } from '../datos.js'
-import { IconoEscanear, IconoEstrella, IconoFlecha, IconoMas, IconoRegalo } from '../iconos.jsx'
+import { IconoEscanear, IconoFlecha, IconoMas, IconoRegalo } from '../iconos.jsx'
 
 export default function Cursos({ datos, setDatos, ir }) {
   const [creando, setCreando] = useState(false)
@@ -18,9 +18,9 @@ export default function Cursos({ datos, setDatos, ir }) {
   return (
     <div className="pantalla">
       <header className="encabezado">
-        <div className="logo"><IconoEstrella tamano={24} borde="#F4B400" /></div>
+        <img className="logo" src={`${import.meta.env.BASE_URL}icono-192.png`} alt="" />
         <div>
-          <h1 style={{ fontSize: 20 }}>Profe Mago Rewards</h1>
+          <h1 style={{ fontSize: 20 }}>ProfeMago Rewards</h1>
           <div className="sub">Hola, profe</div>
         </div>
       </header>
